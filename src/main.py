@@ -42,13 +42,15 @@ if __name__ == "__main__":
             msg = message.content.strip()[len(PREFIX):]
             cmd, *args = re.sub(re.compile(r'\s+'), ' ', msg).split(' ')
 
-            name = ""
-            for words in args:
-                name += words + " "
-            name.strip()
+            match cmd:
+                case "get":
+                    name = ""
+                    for words in args:
+                        name += words + " "
+                    name.strip()
 
-            link = get_content(name)
-            await message.reply(link)
+                    link = get_content(name)
+                    await message.reply(link)                   
 
 
     client.run(os.getenv("TOKEN"))
