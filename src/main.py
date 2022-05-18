@@ -19,6 +19,8 @@ def get_content(keyword):
 
     code = doc.find(class_='bookRow').a['href']
     path = f"{url}{code}"
+
+    # Need changes for direct download link
     # download = f"{url}/dl/{code[6:]}?openInBrowser"
     
     return path
@@ -38,6 +40,7 @@ if __name__ == "__main__":
         if message.author == client.user:
             return
 
+        # Split command and argument from the message
         if message.content.startswith(PREFIX):
             msg = message.content.strip()[len(PREFIX):]
             cmd, *args = re.sub(re.compile(r'\s+'), ' ', msg).split(' ')
