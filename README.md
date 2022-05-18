@@ -12,5 +12,5 @@ python3 -m pip install -U beautifulsoup4
 ```
 * [python-dotenv](https://pypi.org/project/python-dotenv/) -> Read key-value pairs from a .env file and set them as environment variables
 ```
-python3 -m pip install python-dotenv
+python3 -m pip install -U python-dotenv
 ```
