@@ -13,34 +13,50 @@ PREFIX = '$'
 URL = f"https://1lib.in"
 HEADER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"}
 
-# Function to call for fetching data using the given argument
-def get_content(keyword):
+def find(keyword):
     search = f"{URL}/s/{keyword}"
     result = requests.get(search, HEADER).text
     doc = BeautifulSoup(result, "html.parser")
     embed.description = ''
+    embed.set_thumbnail(url = "")
 
-    tables = doc.find_all("table", {"class": "resItemTable"})
+    tables = doc.find_all("div", {"class": "resItemBox resItemBoxBooks exactMatch"})
 
     for item in range(5):
         container = tables[item].find("h3", {"itemprop": "name"})
         code = container.a["href"]
         name = container.a.string
         authors = tables[item].find("div", {"class": "authors"}).a.string
-        embed.description += f"⭐  [{name} - {authors}]({URL}{code})\n\n"
 
-    # Need changes for direct download link
-    # download = f"{URL}/dl/{code[6:]}?openInBrowser"
+        embed.description += f"⭐  [{name} ~ {authors}]({URL}{code})\n\n"
     
     return embed
+
+
+def get(keyword):
+    search = f"{URL}/s/{keyword}"
+    result = requests.get(search, HEADER).text
+    doc = BeautifulSoup(result, "html.parser")
+    embed.description = ''
+
+    container = doc.find("h3", {"itemprop": "name"})
+    code = container.a["href"]
+    name = container.a.string
+    authors = doc.find("div", {"class": "authors"}).a.string
+    image = doc.find("img", {"class": "cover lazy"})["data-src"]
+
+    embed.description += f"⭐  [{name} ~ {authors}]({URL}{code})"
+    embed.set_thumbnail(url = image)
     
+    return embed   
+
 
 if __name__ == "__main__":
     # Event when bot is ready
     @client.event
     async def on_ready():
         print(f"{client.user} is ready!")
-        status = discord.Game(name="$get <book-name>")
+        status = discord.Game(name="$get <book-name>\n$find <book-genre>")
         await client.change_presence(activity=status)
 
 
@@ -56,13 +72,18 @@ if __name__ == "__main__":
 
             match cmd:
                 case "get":
-                    name = ""
+                    book_name = ""
                     for words in args:
-                        name += words + " "
-                    name.strip()
+                        book_name += words + " "
+                    book_name.strip()
 
-                    link = get_content(name)
-                    await message.reply(embed = link)
+                    output = get(book_name)
+                    await message.reply(embed = output)
+
+                case "find":
+                    if len(args) == 1:
+                        output = find(args[0])
+                        await message.reply(embed = output)
 
 
     client.run(os.getenv("TOKEN"))
