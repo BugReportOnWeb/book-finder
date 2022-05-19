@@ -9,19 +9,20 @@ import re
 load_dotenv()
 client = discord.Client()
 PREFIX = '$'
-url = f"https://1lib.in"
+URL = f"https://1lib.in"
+HEADER = {"Accept-Language": 'en-US,en;q=0.5'}
 
 # Function to call for fetching data using the given argument
 def get_content(keyword):
-    search = f"{url}/s/{keyword}"
-    result = requests.get(search).text
+    search = f"{URL}/s/{keyword}"
+    result = requests.get(search, HEADER).text
     doc = BeautifulSoup(result, "html.parser")
 
-    code = doc.find(class_='bookRow').a['href']
-    path = f"{url}{code}"
+    code = doc.find(class_="bookRow").a["href"]
+    path = f"{URL}{code}"
 
     # Need changes for direct download link
-    # download = f"{url}/dl/{code[6:]}?openInBrowser"
+    # download = f"{URL}/dl/{code[6:]}?openInBrowser"
     
     return path
     
