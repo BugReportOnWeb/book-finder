@@ -1,10 +1,10 @@
 from bs4 import BeautifulSoup
 from dotenv import load_dotenv
 import discord
+import requests
 
 import os
 import re
-import requests
 
 load_dotenv()
 client = discord.Client()
