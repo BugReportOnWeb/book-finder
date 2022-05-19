@@ -10,11 +10,12 @@ load_dotenv()
 client = discord.Client()
 PREFIX = '$'
 URL = f"https://1lib.in"
+HEADER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"}
 
 # Function to call for fetching data using the given argument
 def get_content(keyword):
     search = f"{URL}/s/{keyword}"
-    result = requests.get(search).text
+    result = requests.get(search, HEADER).text
     doc = BeautifulSoup(result, "html.parser")
 
     container = doc.find("h3", {"itemprop": "name"})
