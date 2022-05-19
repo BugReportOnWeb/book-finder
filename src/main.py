@@ -58,7 +58,7 @@ if __name__ == "__main__":
     @client.event
     async def on_ready():
         print(f"{client.user} is ready!")
-        status = discord.Game(name="$get <book-name>\n$find <book-genre>")
+        status = discord.Game(name="$get <book-name> || $find <book-genre>")
         await client.change_presence(activity=status)
 
 
