@@ -8,7 +8,7 @@ import re
 
 load_dotenv()
 client = discord.Client()
-embed = discord.Embed()
+embed = discord.Embed(color = 15105570)
 PREFIX = '$'
 URL = f"https://1lib.in"
 HEADER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"}
@@ -18,13 +18,17 @@ def get_content(keyword):
     search = f"{URL}/s/{keyword}"
     result = requests.get(search, HEADER).text
     doc = BeautifulSoup(result, "html.parser")
+    embed.description = ''
 
-    container = doc.find("h3", {"itemprop": "name"})
-    code = container.a["href"]
-    name = container.a.string
-    # path = f"**{name}:** {URL}{code}"
+    tables = doc.find_all("table", {"class": "resItemTable"})
 
-    embed.description = f"[{name}]({URL}{code})"
+    for item in range(5):
+        container = tables[item].find("h3", {"itemprop": "name"})
+        code = container.a["href"]
+        name = container.a.string
+        authors = tables[item].find("div", {"class": "authors"}).a.string
+        embed.description += f"⭐  [{name} - {authors}]({URL}{code})\n\n"
+
     # Need changes for direct download link
     # download = f"{URL}/dl/{code[6:]}?openInBrowser"
     
