@@ -13,6 +13,7 @@ PREFIX = '$'
 URL = f"https://1lib.in"
 HEADER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"}
 
+# Functions for fetching a group of books from the given genre
 def find(keyword):
     search = f"{URL}/s/{keyword}"
     result = requests.get(search, HEADER).text
@@ -33,6 +34,7 @@ def find(keyword):
     return embed
 
 
+# Function for fetching a specific book
 def get(keyword):
     search = f"{URL}/s/{keyword}"
     result = requests.get(search, HEADER).text
@@ -72,6 +74,7 @@ if __name__ == "__main__":
 
             match cmd:
                 case "get":
+                    # Combining all the argumens into a single string
                     book_name = ""
                     for words in args:
                         book_name += words + " "
