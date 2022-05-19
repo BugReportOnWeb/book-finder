@@ -8,6 +8,7 @@ import re
 
 load_dotenv()
 client = discord.Client()
+embed = discord.Embed()
 PREFIX = '$'
 URL = f"https://1lib.in"
 HEADER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"}
@@ -21,12 +22,13 @@ def get_content(keyword):
     container = doc.find("h3", {"itemprop": "name"})
     code = container.a["href"]
     name = container.a.string
-    path = f"**{name}:** {URL}{code}"
+    # path = f"**{name}:** {URL}{code}"
 
+    embed.description = f"[{name}]({URL}{code})"
     # Need changes for direct download link
     # download = f"{URL}/dl/{code[6:]}?openInBrowser"
     
-    return path
+    return embed
     
 
 if __name__ == "__main__":
@@ -56,7 +58,7 @@ if __name__ == "__main__":
                     name.strip()
 
                     link = get_content(name)
-                    await message.reply(link)                   
+                    await message.reply(embed = link)
 
 
     client.run(os.getenv("TOKEN"))
