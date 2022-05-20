@@ -1,4 +1,11 @@
-# Book Finder
+<h1 id="header" align="center">
+    Book Finder
+    <div id="badge">
+        <img id="code-size" src="https://img.shields.io/github/languages/code-size/BugReportOnWeb/book-finder" />
+        <img id="last-commit" src="https://img.shields.io/github/last-commit/BugReportOnWeb/book-finder" />
+    </div>
+</h1>
+
 Discord bot made using discord.py to fetch books from [1lib.in](https://1lib.in)
 ```
 SYNOPSIS
