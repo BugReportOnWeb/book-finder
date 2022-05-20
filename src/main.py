@@ -21,13 +21,13 @@ def find(keyword):
     embed.description = ''
     embed.set_thumbnail(url = "")
 
-    tables = doc.find_all("div", {"class": "resItemBox resItemBoxBooks exactMatch"})
+    cards = doc.find_all("div", {"class": "resItemBox resItemBoxBooks exactMatch"})
 
     for item in range(5):
-        container = tables[item].find("h3", {"itemprop": "name"})
+        container = cards[item].find("h3", {"itemprop": "name"})
         code = container.a["href"]
         name = container.a.string
-        authors = tables[item].find("div", {"class": "authors"}).a.string
+        authors = cards[item].find("div", {"class": "authors"}).a.string
 
         embed.description += f"⭐  [{name} ~ {authors}]({URL}{code})\n\n"
     
