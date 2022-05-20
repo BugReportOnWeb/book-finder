@@ -27,9 +27,19 @@ def find(keyword):
         container = cards[item].find("h3", {"itemprop": "name"})
         code = container.a["href"]
         name = container.a.string
-        authors = cards[item].find("div", {"class": "authors"}).a.string
 
-        embed.description += f"⭐  [{name} ~ {authors}]({URL}{code})\n\n"
+        # Making a list of all the authors for the perticual book
+        authors = cards[item].find("div", {"class": "authors"}).find_all("a")
+        authors_string = ''
+
+        for index in range(len(authors)):
+            if index != len(authors) - 1:
+                authors_string += f"{authors[index].string}, "
+            else:
+                authors_string += authors[index].string
+        authors_string.strip()
+
+        embed.description += f"⭐  [{name} ~ {authors_string}]({URL}{code})\n\n"
     
     return embed
 
@@ -44,10 +54,19 @@ def get(keyword):
     container = doc.find("h3", {"itemprop": "name"})
     code = container.a["href"]
     name = container.a.string
-    authors = doc.find("div", {"class": "authors"}).a.string
     image = doc.find("img", {"class": "cover lazy"})["data-src"]
 
-    embed.description += f"⭐  [{name} ~ {authors}]({URL}{code})"
+    authors = doc.find("div", {"class": "authors"}).find_all("a")
+    authors_string = ''
+
+    for index in range(len(authors)):
+        if index != len(authors) - 1:
+            authors_string += f"{authors[index].string}, "
+        else:
+            authors_string += authors[index].string
+    authors_string.strip()
+
+    embed.description += f"⭐  [{name} ~ {authors_string}]({URL}{code})"
     embed.set_thumbnail(url = image)
     
     return embed   
