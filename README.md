@@ -1,5 +1,10 @@
 # Book Finder
 Discord bot made using discord.py to fetch books from [1lib.in](https://1lib.in)
+```
+SYNOPSIS
+    $get <book-name>        # Returns the possible book related to the given book name.
+    $find <book-genre>      # Returns the top 5 book in the specified genre.
+```
 
 ## Dependencies
 * [discord.py](https://pypi.org/project/discord.py/) -> A Python Wrapper for Discord API.
