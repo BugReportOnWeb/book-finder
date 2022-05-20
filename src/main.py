@@ -28,7 +28,7 @@ def find(keyword):
         code = container.a["href"]
         name = container.a.string
 
-        # Making a list of all the authors for the perticual book
+        # Making a list of all the authors for the perticular book
         authors = cards[item].find("div", {"class": "authors"}).find_all("a")
         authors_string = ''
 
