@@ -58,6 +58,11 @@ if __name__ == "__main__":
     @client.event
     async def on_ready():
         print(f"{client.user} is ready!")
+
+        # Load image fromthe assets for the bot profile
+        with open('../assets/image.jpg', 'rb') as image:
+            await client.user.edit(avatar=image.read())
+
         status = discord.Game(name="$get <book-name> || $find <book-genre>")
         await client.change_presence(activity=status)
 
