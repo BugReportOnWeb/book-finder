@@ -60,7 +60,7 @@ if __name__ == "__main__":
         print(f"{client.user} is ready!")
 
         # Load image fromthe assets for the bot profile
-        with open('../assets/image.jpg', 'rb') as image:
+        with open('./assets/image.jpg', 'rb') as image:
             await client.user.edit(avatar=image.read())
 
         status = discord.Game(name="$get <book-name> || $find <book-genre>")
