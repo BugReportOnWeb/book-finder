@@ -25,6 +25,9 @@ def find(keyword):
 
     if len(cards) >= 5:
         output_range = 5
+    elif len(cards) == 0:
+        embed.description += f"On your request nothing has been found :("
+        return embed
     else:
         output_range = len(cards)
 
@@ -57,7 +60,13 @@ def get(keyword):
     embed.description = ''
 
     container = doc.find("h3", {"itemprop": "name"})
-    code = container.a["href"]
+
+    try:
+        code = container.a["href"]
+    except AttributeError:
+        embed.description += f"On your request nothing has been found :("
+        return embed
+
     name = container.a.string
     image = doc.find("img", {"class": "cover lazy"})["data-src"]
 
