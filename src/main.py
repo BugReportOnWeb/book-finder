@@ -23,7 +23,12 @@ def find(keyword):
 
     cards = doc.find_all("div", {"class": "resItemBox resItemBoxBooks exactMatch"})
 
-    for item in range(5):
+    if len(cards) >= 5:
+        output_range = 5
+    else:
+        output_range = len(cards)
+
+    for item in range(output_range):
         container = cards[item].find("h3", {"itemprop": "name"})
         code = container.a["href"]
         name = container.a.string
@@ -85,7 +90,6 @@ if __name__ == "__main__":
         status = discord.Game(name="$get <book-name> || $find <book-genre>")
         await client.change_presence(activity=status)
 
-
     @client.event
     async def on_message(message):
         if message.author == client.user:
@@ -111,7 +115,6 @@ if __name__ == "__main__":
                     if len(args) == 1:
                         output = find(args[0])
                         await message.reply(embed = output)
-
 
     client.run(os.getenv("TOKEN"))
 
