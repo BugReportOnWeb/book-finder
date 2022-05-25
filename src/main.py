@@ -8,7 +8,7 @@ import re
 
 load_dotenv()
 client = discord.Client()
-embed = discord.Embed(color = 15105570)
+embed = discord.Embed(color=15105570)
 PREFIX = '$'
 URL = f"https://1lib.in"
 HEADER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/20100101 Firefox/100.0"}
@@ -19,7 +19,7 @@ def find(keyword):
     result = requests.get(search, HEADER).text
     doc = BeautifulSoup(result, "html.parser")
     embed.description = ''
-    embed.set_thumbnail(url = "")
+    embed.set_thumbnail(url='')
 
     cards = doc.find_all("div", {"class": "resItemBox resItemBoxBooks exactMatch"})
 
@@ -58,6 +58,7 @@ def get(keyword):
     result = requests.get(search, HEADER).text
     doc = BeautifulSoup(result, "html.parser")
     embed.description = ''
+    embed.set_thumbnail(url='')
 
     container = doc.find("h3", {"itemprop": "name"})
 
@@ -124,6 +125,10 @@ if __name__ == "__main__":
                     if len(args) == 1:
                         output = find(args[0])
                         await message.reply(embed = output)
+                    else:
+                        embed.description = "Please specify a single genre (argument) with $find command"
+                        embed.set_thumbnail(url='')
+                        await message.reply(embed=embed)
 
     client.run(os.getenv("TOKEN"))
 
