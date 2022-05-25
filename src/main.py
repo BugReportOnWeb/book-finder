@@ -15,11 +15,14 @@ HEADER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/2010010
 
 # Functions for fetching a group of books from the given genre
 def find(keyword):
+    embed.description = ''
+    embed.set_thumbnail(url='')
+    global no_output
+    no_output = False
+
     search = f"{URL}/s/{keyword}"
     result = requests.get(search, HEADER).text
     doc = BeautifulSoup(result, "html.parser")
-    embed.description = ''
-    embed.set_thumbnail(url='')
 
     cards = doc.find_all("div", {"class": "resItemBox resItemBoxBooks exactMatch"})
 
@@ -27,6 +30,7 @@ def find(keyword):
         output_range = 5
     elif len(cards) == 0:
         embed.description += f"On your request nothing has been found :("
+        no_output = True
         return embed
     else:
         output_range = len(cards)
@@ -54,11 +58,14 @@ def find(keyword):
 
 # Function for fetching a specific book
 def get(keyword):
+    embed.description = ''
+    embed.set_thumbnail(url='')
+    global no_output
+    no_output = False
+
     search = f"{URL}/s/{keyword}"
     result = requests.get(search, HEADER).text
     doc = BeautifulSoup(result, "html.parser")
-    embed.description = ''
-    embed.set_thumbnail(url='')
 
     container = doc.find("h3", {"itemprop": "name"})
 
@@ -66,6 +73,7 @@ def get(keyword):
         code = container.a["href"]
     except AttributeError:
         embed.description += f"On your request nothing has been found :("
+        no_output = True
         return embed
 
     name = container.a.string
@@ -82,7 +90,8 @@ def get(keyword):
     authors_string.strip()
 
     embed.description += f"⭐  [{name} ~ {authors_string}]({URL}{code})"
-    embed.set_thumbnail(url = image)
+    if image != "/img/cover-not-exists.png":
+        embed.set_thumbnail(url=image)
     
     return embed   
 
@@ -119,16 +128,22 @@ if __name__ == "__main__":
                     book_name.strip()
 
                     output = get(book_name)
-                    await message.reply(embed = output)
+                    await message.reply(embed=output)
+
+                    if no_output:
+                        await message.add_reaction("😢")
 
                 case "find":
                     if len(args) == 1:
                         output = find(args[0])
-                        await message.reply(embed = output)
+                        await message.reply(embed=output)
                     else:
                         embed.description = "Please specify a single genre (argument) with $find command"
                         embed.set_thumbnail(url='')
                         await message.reply(embed=embed)
+
+                    if no_output:
+                        await message.add_reaction("😢")
 
     client.run(os.getenv("TOKEN"))
 
