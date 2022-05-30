@@ -16,10 +16,11 @@ HEADER = {"User-Agent": "Mozilla/5.0 (X11; Linux x86_64; rv:100.0) Gecko/2010010
 
 # Functions for fetching a group of books from the given genre
 def find(keyword):
-    embed.description = ''
-    embed.set_thumbnail(url='')
     global no_output
     no_output = False
+
+    embed.title = embed.description = ''
+    embed.set_thumbnail(url='')
 
     search = f"{URL}/s/{keyword}"
     result = requests.get(search, HEADER).text
@@ -59,10 +60,11 @@ def find(keyword):
 
 # Function for fetching a specific book
 def get(keyword):
-    embed.description = ''
-    embed.set_thumbnail(url='')
     global no_output
     no_output = False
+
+    embed.title = embed.description = embed.url = ''
+    embed.set_thumbnail(url='')
 
     search = f"{URL}/s/{keyword}"
     result = requests.get(search, HEADER).text
@@ -90,7 +92,9 @@ def get(keyword):
             authors_string += authors[index].string
     authors_string.strip()
 
-    embed.description += f"⭐  [{name} ~ {authors_string}]({URL}{code})"
+    embed.title += f"⭐  {name}"
+    embed.description += authors_string
+    embed.url = URL + code
     if image != "/img/cover-not-exists.png":
         embed.set_thumbnail(url=image)
     
@@ -148,3 +152,5 @@ if __name__ == "__main__":
 
     client.run(os.getenv("TOKEN"))
 
+
+    # random commentj
