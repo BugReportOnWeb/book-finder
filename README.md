@@ -30,3 +30,8 @@ python3 -m pip install -U python-dotenv
 ```
 python3 -m pip install -U requests
 ```
+---
+##### Alternatively, you can use the following to install all the required dependencies
+```
+python3 -m pip install -U requirements.txt
+```
