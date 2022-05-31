@@ -15,23 +15,23 @@ SYNOPSIS
 
 ## Dependencies
 * [discord.py](https://pypi.org/project/discord.py/) -> A Python Wrapper for Discord API.
-```
+```bash
 python3 -m pip install -U discord.py
 ```
 * [beautifulsoup4](https://pypi.org/project/beautifulsoup4/) -> Screen-scraping library.
-```
+```bash
 python3 -m pip install -U beautifulsoup4
 ```
 * [python-dotenv](https://pypi.org/project/python-dotenv/) -> Read key-value pairs from a .env file and set them as environment variables.
-```
+```bash
 python3 -m pip install -U python-dotenv
 ```
 * [requests](https://pypi.org/project/requests/) -> Python HTTP for Humans.
-```
+```bash
 python3 -m pip install -U requests
 ```
 ---
 ##### Alternatively, you can use the following to install all the required dependencies
-```
+```bash
 python3 -m pip install -U requirements.txt
 ```
