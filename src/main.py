@@ -154,5 +154,3 @@ if __name__ == "__main__":
 
     client.run(os.getenv("TOKEN"))
 
-
-    # random commentj
